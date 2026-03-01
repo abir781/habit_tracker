@@ -1,11 +1,11 @@
-import { defineConfig, globalIgnores } from "eslint/config";
-import nextVitals from "eslint-config-next/core-web-vitals";
+import { defineConfig, globaLinkgnores } from "esLinknt/config";
+import nextVitals from "esLinknt-config-next/core-web-vitals";
 
-const eslintConfig = defineConfig([
+const esLinkntConfig = defineConfig([
   ...nextVitals,
-  // Override default ignores of eslint-config-next.
-  globalIgnores([
-    // Default ignores of eslint-config-next:
+  // Override default ignores of esLinknt-config-next.
+  globaLinkgnores([
+    // Default ignores of esLinknt-config-next:
     ".next/**",
     "out/**",
     "build/**",
@@ -13,4 +13,4 @@ const eslintConfig = defineConfig([
   ]),
 ]);
 
-export default eslintConfig;
+export default esLinkntConfig;
