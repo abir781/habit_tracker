@@ -21,7 +21,7 @@ const Banner = () => {
 
 
     return (
-        <div className={`bg-[url('/next.jpg')] min-h-screen bg-no-repeat bg-cover relative ${archivo.className} tracking-widest`}>
+        <div className={`bg-[url('/next.jpg')] min-h-screen bg-no-repeat bg-cover relative ${archivo.className} tracking-wider`}>
 
              <div className="absolute inset-0 bg-black/20"></div>
 

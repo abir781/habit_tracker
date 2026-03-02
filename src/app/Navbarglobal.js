@@ -5,7 +5,7 @@ import React from 'react';
 import { FaToggleOff, FaToggleOn } from "react-icons/fa";
 import { useHabit } from './store';
 
-const Navbar = () => {
+const Navbarglobal = () => {
     const lightzust = useHabit((state)=> state.light)
     const darkandlightmakerzust = useHabit((state)=> state.darkandlightmaker)
 
@@ -14,7 +14,7 @@ const Navbar = () => {
         console.log(lightzust);
     }
     return (
-        <div className='top-14 absolute left-1/2 -translate-x-1/2 px-12 py-4 bg-[#30BA8F]/20 rounded-xl '>
+        <div className={`top-14 absolute left-1/2 -translate-x-1/2 px-12 py-4    ${lightzust ? "bg-[#30BA8F]/75": "bg-[#30BA8F]/20"}  rounded-xl `}>
 
             <div className='font-bold text-white  flex gap-22 items-center   '>
                 <div>
@@ -49,4 +49,4 @@ const Navbar = () => {
     );
 };
 
-export default Navbar;
+export default Navbarglobal;
