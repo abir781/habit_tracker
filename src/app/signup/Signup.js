@@ -20,21 +20,27 @@ const Signup = () => {
   const handleSubmit = async (e) => {
   e.preventDefault();
 
-  const habitname = e.target.habitname.value;
-  const frequency = e.target.frequency.value;
-  const category = useHabit.getState().category;
+  const username = e.target.name.value;
+  const email = e.target.email.value;
+  const password = e.target.password.value;
+  const confirmpassword=e.target.confirmpassword.value;
 
-  const newHabit = { habitname, category, frequency };
+  if(password!==confirmpassword){
+    return alert("it's not working")
 
-  // POST request backend e
-  const res = await fetch('http://localhost:5000/habitscollection', {
+  }
+  const newUser={username,email,password};
+
+  const res = await fetch('http://localhost:5000/signup', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(newHabit),
+    body: JSON.stringify(newUser),
   });
 
   const data = await res.json();
   console.log('Saved habit:', data);
+
+ 
 };
     return (
       <div className={`min-h-screen rounded ${lightzust ? "bg-gradient-to-br from-[#f8fbff] via-[#eef6ff] to-[#e0f2fe] text-black" : "bg-gradient-to-br from-[#0b1419] via-[#13232d] to-[#1b3745] text-white"}`}>
@@ -106,9 +112,9 @@ const Signup = () => {
 
         {/* Category Buttons */}
     <input
-          type="text"
-          placeholder="Your Name"
-          name='name'
+          type="email"
+          placeholder="Your Email Address"
+          name='email'
           required
           style={{
             background: 'linear-gradient(135deg, #1e4a2e 0%, #153b38 50%, #0e2a2a 100%)',
@@ -138,9 +144,9 @@ const Signup = () => {
 
         {/* Frequency Label + Select row */}
           <input
-          type="text"
-          placeholder="Your Name"
-          name='name'
+          type="password"
+          placeholder="Password"
+          name='password'
           required
           style={{
             background: 'linear-gradient(135deg, #1e4a2e 0%, #153b38 50%, #0e2a2a 100%)',
@@ -170,9 +176,9 @@ const Signup = () => {
 
 
           <input
-          type="text"
-          placeholder="Your Name"
-          name='name'
+          type="password"
+          placeholder="Confirm Password"
+          name='confirmpassword'
           required
           style={{
             background: 'linear-gradient(135deg, #1e4a2e 0%, #153b38 50%, #0e2a2a 100%)',
