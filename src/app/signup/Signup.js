@@ -2,7 +2,7 @@
 import React from 'react';
 import { useHabit } from '../store';
 
-const Habitsmaker = () => {
+const Signup = () => {
      const lightzust = useHabit((state)=> state.light)
    
     const setcategoryzust = useHabit((state)=> state.setCategory);
@@ -62,7 +62,7 @@ const Habitsmaker = () => {
         textAlign: 'center',
         opacity: 0.9,
       }}>
-        New Habit
+        Sign Up
       </h2>
 
       <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
@@ -70,8 +70,8 @@ const Habitsmaker = () => {
         {/* Input */}
         <input
           type="text"
-          placeholder="Habit name"
-          name='habitname'
+          placeholder="Your Name"
+          name='name'
           required
           style={{
             background: 'linear-gradient(135deg, #1e4a2e 0%, #153b38 50%, #0e2a2a 100%)',
@@ -100,98 +100,105 @@ const Habitsmaker = () => {
         />
 
         {/* Category Label */}
-        <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: '11px', fontWeight: '600', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '-8px' }}>
+        {/* <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: '11px', fontWeight: '600', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '-8px' }}>
           Category
-        </p>
+        </p> */}
 
         {/* Category Buttons */}
-        <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', justifyContent: 'center' }}>
-          {categories.map((cat, index) => (
-            <button
-            type='button'
-            onClick={()=>setcategoryzust(cat)}
-          
-              className="relative rounded-full font-bold text-white"
-              key={index}
-              style={{
-                width: '90px',
-                height: '90px',
-                fontSize: '12px',
-                background: 'linear-gradient(135deg, #1e4a2e 0%, #153b38 50%, #0e2a2a 100%)',
-                border: '1.5px solid rgba(21, 59, 56, 0.6)',
-                boxShadow: '0 0 18px rgba(21, 59, 56, 0.4), 0 0 6px rgba(30, 74, 46, 0.3), inset 0 1px 0 rgba(255,255,255,0.07)',
-                letterSpacing: '0.03em',
-                transition: 'all 0.25s ease',
-                cursor: 'pointer',
-              }}
-              onMouseEnter={e => {
-                e.currentTarget.style.background = 'linear-gradient(135deg, #25603c 0%, #1a4d44 50%, #122f2f 100%)';
-                e.currentTarget.style.border = '1.5px solid rgba(30, 74, 46, 0.9)';
-                e.currentTarget.style.boxShadow = '0 0 30px rgba(21, 59, 56, 0.7), 0 0 12px rgba(30, 74, 46, 0.5), inset 0 1px 0 rgba(255,255,255,0.10)';
-                e.currentTarget.style.transform = 'scale(1.06)';
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.background = 'linear-gradient(135deg, #1e4a2e 0%, #153b38 50%, #0e2a2a 100%)';
-                e.currentTarget.style.border = '1.5px solid rgba(21, 59, 56, 0.6)';
-                e.currentTarget.style.boxShadow = '0 0 18px rgba(21, 59, 56, 0.4), 0 0 6px rgba(30, 74, 46, 0.3), inset 0 1px 0 rgba(255,255,255,0.07)';
-                e.currentTarget.style.transform = 'scale(1)';
-              }}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
+    <input
+          type="text"
+          placeholder="Your Name"
+          name='name'
+          required
+          style={{
+            background: 'linear-gradient(135deg, #1e4a2e 0%, #153b38 50%, #0e2a2a 100%)',
+            border: '1.5px solid rgba(21, 59, 56, 0.6)',
+            boxShadow: '0 0 18px rgba(21, 59, 56, 0.4), 0 0 6px rgba(30, 74, 46, 0.3), inset 0 1px 0 rgba(255,255,255,0.07)',
+            borderRadius: '14px',
+            padding: '13px 18px',
+            color: 'white',
+            fontSize: '13px',
+            fontWeight: '600',
+            letterSpacing: '0.03em',
+            outline: 'none',
+            transition: 'all 0.25s ease',
+            width: '100%',
+          }}
+          onFocus={e => {
+            e.currentTarget.style.background = 'linear-gradient(135deg, #25603c 0%, #1a4d44 50%, #122f2f 100%)';
+            e.currentTarget.style.border = '1.5px solid rgba(30, 74, 46, 0.9)';
+            e.currentTarget.style.boxShadow = '0 0 30px rgba(21, 59, 56, 0.7), 0 0 12px rgba(30, 74, 46, 0.5), inset 0 1px 0 rgba(255,255,255,0.10)';
+          }}
+          onBlur={e => {
+            e.currentTarget.style.background = 'linear-gradient(135deg, #1e4a2e 0%, #153b38 50%, #0e2a2a 100%)';
+            e.currentTarget.style.border = '1.5px solid rgba(21, 59, 56, 0.6)';
+            e.currentTarget.style.boxShadow = '0 0 18px rgba(21, 59, 56, 0.4), 0 0 6px rgba(30, 74, 46, 0.3), inset 0 1px 0 rgba(255,255,255,0.07)';
+          }}
+        />
 
         {/* Frequency Label + Select row */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-          <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: '11px', fontWeight: '600', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
-            Frequency
-          </p>
-          <div style={{ position: 'relative', display: 'inline-block', width: '100%' }}>
-            <select
-              name='frequency'
-              style={{
-                width: '100%',
-                background: 'linear-gradient(135deg, #1e4a2e 0%, #153b38 50%, #0e2a2a 100%)',
-                border: '1.5px solid rgba(21, 59, 56, 0.6)',
-                boxShadow: '0 0 18px rgba(21, 59, 56, 0.4), 0 0 6px rgba(30, 74, 46, 0.3), inset 0 1px 0 rgba(255,255,255,0.07)',
-                borderRadius: '14px',
-                padding: '13px 18px',
-                color: 'white',
-                fontSize: '13px',
-                fontWeight: '600',
-                letterSpacing: '0.03em',
-                outline: 'none',
-                transition: 'all 0.25s ease',
-                cursor: 'pointer',
-                appearance: 'none',
-                WebkitAppearance: 'none',
-              }}
-              onFocus={e => {
-                e.currentTarget.style.background = 'linear-gradient(135deg, #25603c 0%, #1a4d44 50%, #122f2f 100%)';
-                e.currentTarget.style.border = '1.5px solid rgba(30, 74, 46, 0.9)';
-                e.currentTarget.style.boxShadow = '0 0 30px rgba(21, 59, 56, 0.7), 0 0 12px rgba(30, 74, 46, 0.5), inset 0 1px 0 rgba(255,255,255,0.10)';
-              }}
-              onBlur={e => {
-                e.currentTarget.style.background = 'linear-gradient(135deg, #1e4a2e 0%, #153b38 50%, #0e2a2a 100%)';
-                e.currentTarget.style.border = '1.5px solid rgba(21, 59, 56, 0.6)';
-                e.currentTarget.style.boxShadow = '0 0 18px rgba(21, 59, 56, 0.4), 0 0 6px rgba(30, 74, 46, 0.3), inset 0 1px 0 rgba(255,255,255,0.07)';
-              }}
-            >
-              <option value="daily" style={{ background: '#153b38', color: 'white' }}>Daily</option>
-              <option value="weekly" style={{ background: '#153b38', color: 'white' }}>Weekly</option>
-            </select>
-            <span style={{
-              position: 'absolute',
-              right: '16px',
-              top: '50%',
-              transform: 'translateY(-50%)',
-              color: 'rgba(255,255,255,0.4)',
-              pointerEvents: 'none',
-              fontSize: '10px',
-            }}>▼</span>
-          </div>
-        </div>
+          <input
+          type="text"
+          placeholder="Your Name"
+          name='name'
+          required
+          style={{
+            background: 'linear-gradient(135deg, #1e4a2e 0%, #153b38 50%, #0e2a2a 100%)',
+            border: '1.5px solid rgba(21, 59, 56, 0.6)',
+            boxShadow: '0 0 18px rgba(21, 59, 56, 0.4), 0 0 6px rgba(30, 74, 46, 0.3), inset 0 1px 0 rgba(255,255,255,0.07)',
+            borderRadius: '14px',
+            padding: '13px 18px',
+            color: 'white',
+            fontSize: '13px',
+            fontWeight: '600',
+            letterSpacing: '0.03em',
+            outline: 'none',
+            transition: 'all 0.25s ease',
+            width: '100%',
+          }}
+          onFocus={e => {
+            e.currentTarget.style.background = 'linear-gradient(135deg, #25603c 0%, #1a4d44 50%, #122f2f 100%)';
+            e.currentTarget.style.border = '1.5px solid rgba(30, 74, 46, 0.9)';
+            e.currentTarget.style.boxShadow = '0 0 30px rgba(21, 59, 56, 0.7), 0 0 12px rgba(30, 74, 46, 0.5), inset 0 1px 0 rgba(255,255,255,0.10)';
+          }}
+          onBlur={e => {
+            e.currentTarget.style.background = 'linear-gradient(135deg, #1e4a2e 0%, #153b38 50%, #0e2a2a 100%)';
+            e.currentTarget.style.border = '1.5px solid rgba(21, 59, 56, 0.6)';
+            e.currentTarget.style.boxShadow = '0 0 18px rgba(21, 59, 56, 0.4), 0 0 6px rgba(30, 74, 46, 0.3), inset 0 1px 0 rgba(255,255,255,0.07)';
+          }}
+        />
+
+
+          <input
+          type="text"
+          placeholder="Your Name"
+          name='name'
+          required
+          style={{
+            background: 'linear-gradient(135deg, #1e4a2e 0%, #153b38 50%, #0e2a2a 100%)',
+            border: '1.5px solid rgba(21, 59, 56, 0.6)',
+            boxShadow: '0 0 18px rgba(21, 59, 56, 0.4), 0 0 6px rgba(30, 74, 46, 0.3), inset 0 1px 0 rgba(255,255,255,0.07)',
+            borderRadius: '14px',
+            padding: '13px 18px',
+            color: 'white',
+            fontSize: '13px',
+            fontWeight: '600',
+            letterSpacing: '0.03em',
+            outline: 'none',
+            transition: 'all 0.25s ease',
+            width: '100%',
+          }}
+          onFocus={e => {
+            e.currentTarget.style.background = 'linear-gradient(135deg, #25603c 0%, #1a4d44 50%, #122f2f 100%)';
+            e.currentTarget.style.border = '1.5px solid rgba(30, 74, 46, 0.9)';
+            e.currentTarget.style.boxShadow = '0 0 30px rgba(21, 59, 56, 0.7), 0 0 12px rgba(30, 74, 46, 0.5), inset 0 1px 0 rgba(255,255,255,0.10)';
+          }}
+          onBlur={e => {
+            e.currentTarget.style.background = 'linear-gradient(135deg, #1e4a2e 0%, #153b38 50%, #0e2a2a 100%)';
+            e.currentTarget.style.border = '1.5px solid rgba(21, 59, 56, 0.6)';
+            e.currentTarget.style.boxShadow = '0 0 18px rgba(21, 59, 56, 0.4), 0 0 6px rgba(30, 74, 46, 0.3), inset 0 1px 0 rgba(255,255,255,0.07)';
+          }}
+        />
 
         {/* Submit Button */}
         <button
@@ -227,7 +234,7 @@ const Habitsmaker = () => {
           onMouseDown={e => { e.currentTarget.style.transform = 'scale(0.97)'; }}
           onMouseUp={e => { e.currentTarget.style.transform = 'scale(1.02)'; }}
         >
-          Add Habit
+          Crete Your Habittracker Account
         </button>
 
       </form>
@@ -237,4 +244,4 @@ const Habitsmaker = () => {
     );
 };
 
-export default Habitsmaker;
+export default Signup;

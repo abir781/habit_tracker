@@ -33,6 +33,7 @@ const Navbarglobal = () => {
                     <Link href="/progress">Progress</Link>
                     <Link href="/profile">Profile</Link>
                     <Link href="/signin">Signin</Link>
+                    <Link href="/signup">Signup</Link>
 
                     {
                         lightzust ?  <FaToggleOff onClick={makeinverse} size={30} />: <FaToggleOn onClick={makeinverse} size={30} />
