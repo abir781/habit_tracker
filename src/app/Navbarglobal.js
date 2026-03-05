@@ -4,14 +4,24 @@ import Link from 'next/link';
 import React from 'react';
 import { FaToggleOff, FaToggleOn } from "react-icons/fa";
 import { useHabit } from './store';
+import { useAuth } from './store/authstore';
 
 const Navbarglobal = () => {
     const lightzust = useHabit((state)=> state.light)
     const darkandlightmakerzust = useHabit((state)=> state.darkandlightmaker)
+    const userzust = useAuth((state)=>state.user);
+    const setlogoutzust = useAuth((state)=> state.setlogout);
+    console.log(userzust);
 
     const makeinverse=()=>{
         darkandlightmakerzust();
         console.log(lightzust);
+    }
+
+    const handlelogout=()=>{
+
+        setlogoutzust();
+
     }
     return (
         <div className={`top-14 absolute left-1/2 -translate-x-1/2 px-12 py-4    ${lightzust ? "bg-[#30BA8F]/75": "bg-[#30BA8F]/20"}  rounded-xl `}>
@@ -35,7 +45,11 @@ const Navbarglobal = () => {
                     
                     <Link href="/signup">Signup</Link>
 
-                    <Link href="/login">Login</Link>
+                    {/* <Link href="/login">Login</Link> */}
+
+                    {
+                        userzust ? <button onClick={handlelogout}>Logout</button> : <Link href="/login">Login</Link>
+                    }
 
                     {
                         lightzust ?  <FaToggleOff onClick={makeinverse} size={30} />: <FaToggleOn onClick={makeinverse} size={30} />

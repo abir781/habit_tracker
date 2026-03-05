@@ -4,8 +4,13 @@ export const useAuth = create((set)=>({
     user: null,
     token: null,
 
-    setlogin: (userData,token) =>
-        set({user: userData,token}),
+    setlogin: (userData,token) =>{
+
+        localStorage.setItem("token",token);
+        set({user: userData,token});
+
+    },
+        
 
     setlogout: ()=>{
         localStorage.removeItem("token");

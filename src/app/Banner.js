@@ -4,6 +4,7 @@ import Navbar from './Navbar';
 import BlurIn from './Blurin';
 import FadeInButton from './Fadeinbutton';
 import { Archivo_Black } from 'next/font/google';
+import { useAuth } from './store/authstore';
 
 
 //   const bungee = Bungee({
@@ -15,9 +16,17 @@ const archivo = Archivo_Black({
   subsets: ["latin"],
   weight: ["400"],
 });
+
+
     
 
 const Banner = () => {
+
+  const userzust = useAuth((state)=>state.user);
+
+    const tokenzust = useAuth((state)=>state.token);
+
+    console.log(userzust,tokenzust);
 
 
     return (

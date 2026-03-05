@@ -41,11 +41,13 @@ const Login = () => {
       body: JSON.stringify({ email, password })
     })
 
-    const data = await res.json()
+    const data = await res.json();
+    console.log(data);
 
     if (res.ok) {
       // Token save
-      localStorage.setItem("token", data.token)
+      // localStorage.setItem("token", data.token)
+      setloginzust(data.user,data.token);
       alert("Login Success ✅")
       e.target.reset()
     //   router.push("/dashboard") // Protected route
