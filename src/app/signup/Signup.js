@@ -1,9 +1,12 @@
 "use client";
 import React from 'react';
 import { useHabit } from '../store';
+import { useAuth } from '../store/authstore';
 
 const Signup = () => {
      const lightzust = useHabit((state)=> state.light)
+
+     const setloginzust = useAuth((state)=> state.setlogin);
    
     const setcategoryzust = useHabit((state)=> state.setCategory);
     // const categoryzust = useHabit((state)=> state.category);
@@ -39,6 +42,17 @@ const Signup = () => {
 
   const data = await res.json();
   console.log('Saved habit:', data);
+
+    if (res.ok) {
+      // Token save
+      // localStorage.setItem("token", data.token)
+      setloginzust(data.user,data.token);
+      alert("Login Success ✅")
+      e.target.reset()
+    //   router.push("/dashboard") // Protected route
+    } else {
+      alert(data.message)
+    }
 
  
 };

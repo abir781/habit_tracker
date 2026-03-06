@@ -1,12 +1,17 @@
 'use client'; 
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FaToggleOff, FaToggleOn } from "react-icons/fa";
 import { useHabit } from './store';
 import { useAuth } from './store/authstore';
 
 const Navbar = () => {
+       const restoreAuth = useAuth((state) => state.restore);
+    
+      useEffect(() => {
+        restoreAuth(); // safe: browser API used inside useEffect
+      }, []);
     const lightzust = useHabit((state)=> state.light)
     const darkandlightmakerzust = useHabit((state)=> state.darkandlightmaker)
      const userzust = useAuth((state)=>state.user);
