@@ -547,6 +547,8 @@ const Habitsmaker = () => {
 
    const [datas,setdatas] = useState([]);
 
+   const [startDate, setStartDate] = useState(new Date());
+
 
 
       
@@ -606,10 +608,10 @@ const modalworking =()=>{
     e.preventDefault();
 
     const habitname = e.target.habitname.value;
-    const frequency = e.target.frequency.value;
+    // const frequency = e.target.frequency.value;
     const category = useHabit.getState().category;
 
-    const newHabit = { habitname, category, frequency, useremail };
+    const newHabit = { habitname, category, startDate, useremail };
 
     try {
       const res = await fetch('http://localhost:5000/habitscollection', {
@@ -857,7 +859,7 @@ className='block mx-auto mt-7'
               ))}
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+            {/* <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
               <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: '11px', fontWeight: '600', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
                 Frequency
               </p>
@@ -905,7 +907,49 @@ className='block mx-auto mt-7'
                   fontSize: '10px',
                 }}>▼</span>
               </div>
-            </div>
+            </div> */}
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+  <p style={{
+    color: 'rgba(255,255,255,0.45)',
+    fontSize: '11px',
+    fontWeight: '600',
+    letterSpacing: '0.1em',
+    textTransform: 'uppercase',
+  }}>
+    Start Date
+  </p>
+  <input
+    type="date"
+    value={startDate.toISOString().split("T")[0]}
+    onChange={(e) => setStartDate(new Date(e.target.value))}
+    style={{
+      background: 'linear-gradient(135deg, #1e4a2e 0%, #153b38 50%, #0e2a2a 100%)',
+      border: '1.5px solid rgba(21, 59, 56, 0.6)',
+      boxShadow: '0 0 18px rgba(21, 59, 56, 0.4), 0 0 6px rgba(30, 74, 46, 0.3), inset 0 1px 0 rgba(255,255,255,0.07)',
+      borderRadius: '14px',
+      padding: '13px 18px',
+      color: 'white',
+      fontSize: '13px',
+      fontWeight: '600',
+      letterSpacing: '0.03em',
+      outline: 'none',
+      transition: 'all 0.25s ease',
+      width: '100%',
+      colorScheme: 'dark',
+    }}
+    onFocus={e => {
+      e.currentTarget.style.background = 'linear-gradient(135deg, #25603c 0%, #1a4d44 50%, #122f2f 100%)';
+      e.currentTarget.style.border = '1.5px solid rgba(30, 74, 46, 0.9)';
+      e.currentTarget.style.boxShadow = '0 0 30px rgba(21, 59, 56, 0.7), 0 0 12px rgba(30, 74, 46, 0.5), inset 0 1px 0 rgba(255,255,255,0.10)';
+    }}
+    onBlur={e => {
+      e.currentTarget.style.background = 'linear-gradient(135deg, #1e4a2e 0%, #153b38 50%, #0e2a2a 100%)';
+      e.currentTarget.style.border = '1.5px solid rgba(21, 59, 56, 0.6)';
+      e.currentTarget.style.boxShadow = '0 0 18px rgba(21, 59, 56, 0.4), 0 0 6px rgba(30, 74, 46, 0.3), inset 0 1px 0 rgba(255,255,255,0.07)';
+    }}
+  />
+</div>
 
             <button
               type="submit"
