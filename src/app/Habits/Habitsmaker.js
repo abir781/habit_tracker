@@ -536,14 +536,57 @@
 
 
 "use client";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHabit } from '../store';
 import { toast } from 'react-toastify';
+import { useAuth } from '../store/authstore';
 
 const Habitsmaker = () => {
+
+   const restoreAuth = useAuth((state) => state.restore);
+
+   const [datas,setdatas] = useState([]);
+
+
+
+      
+        useEffect(() => {
+          restoreAuth(); // safe: browser API used inside useEffect
+        }, []);
+
+  const showmodalzust = useHabit((state)=>state.showmodal);
+  const showmodalonmiddlezust = useHabit((state)=>state.showmodalonmiddle);
+        
   const lightzust = useHabit((state) => state.light);
   const setcategoryzust = useHabit((state) => state.setCategory);
   const [isActive, setIsActive] = useState(null);
+      const userzust = useAuth((state)=>state.user);
+      const useremail= userzust?.email;
+
+useEffect(() => {
+
+  if(!useremail) return;
+  console.log(useremail);
+
+  fetch(`http://localhost:5000/habitscollection?email=${useremail}`)
+    .then(res => res.json())
+    .then(data => setdatas(data))
+
+}, [useremail])
+
+const modalworking =()=>{
+  showmodalonmiddlezust();
+}
+
+
+      // useEffect(()=>{
+      //   fetch('localhos')
+      // })
+
+   
+
+      // console.log(userzust?.email);
+
 
   const categories = [
     { name: "Health", color: "#e74c3c", glow: "rgba(231, 76, 60, 0.6)" },
@@ -566,7 +609,7 @@ const Habitsmaker = () => {
     const frequency = e.target.frequency.value;
     const category = useHabit.getState().category;
 
-    const newHabit = { habitname, category, frequency };
+    const newHabit = { habitname, category, frequency, useremail };
 
     try {
       const res = await fetch('http://localhost:5000/habitscollection', {
@@ -596,7 +639,119 @@ const Habitsmaker = () => {
   return (
     <div className={`min-h-screen rounded ${lightzust ? "bg-gradient-to-br from-[#f8fbff] via-[#eef6ff] to-[#e0f2fe] text-black" : "bg-gradient-to-br from-[#0b1419] via-[#13232d] to-[#1b3745] text-white"}`}>
 
-      <div className='flex justify-center items-center min-h-screen px-4'>
+       <div className="   px-4 py-8   min-h-screen">
+     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-[1800px] mx-auto mt-[140px]">
+  {datas.map((habit) => (
+    <div
+      key={habit._id}
+      style={{
+        background: 'linear-gradient(160deg, #0f2a1e 0%, #0d1f1d 50%, #091518 100%)',
+        border: '1.5px solid rgba(21, 59, 56, 0.5)',
+        boxShadow: '0 0 60px rgba(21, 59, 56, 0.3), 0 0 20px rgba(14, 42, 42, 0.2)',
+        borderRadius: '24px',
+        padding: '36px 36px',
+        width: '100%',
+        minHeight: '260px',
+        transition: 'all 0.3s ease',
+        cursor: 'pointer',
+      }}
+      onMouseEnter={e => {
+        e.currentTarget.style.background = 'linear-gradient(160deg, #1a4a30 0%, #153b38 50%, #0e2a2a 100%)';
+        e.currentTarget.style.border = '1.5px solid rgba(30, 100, 80, 0.9)';
+        e.currentTarget.style.boxShadow = '0 0 80px rgba(21, 120, 80, 0.5), 0 0 40px rgba(14, 80, 60, 0.4), 0 8px 32px rgba(0,0,0,0.4)';
+        e.currentTarget.style.transform = 'translateY(-8px) scale(1.02)';
+      }}
+      onMouseLeave={e => {
+        e.currentTarget.style.background = 'linear-gradient(160deg, #0f2a1e 0%, #0d1f1d 50%, #091518 100%)';
+        e.currentTarget.style.border = '1.5px solid rgba(21, 59, 56, 0.5)';
+        e.currentTarget.style.boxShadow = '0 0 60px rgba(21, 59, 56, 0.3), 0 0 20px rgba(14, 42, 42, 0.2)';
+        e.currentTarget.style.transform = 'translateY(0) scale(1)';
+      }}
+    >
+      <h3
+        style={{
+          color: 'white',
+          fontSize: '24px',
+          fontWeight: '800',
+          letterSpacing: '0.04em',
+          marginBottom: '16px',
+          textAlign: 'left',
+          opacity: 0.95,
+        }}
+      >
+        {habit.habitname}
+      </h3>
+
+      <p
+        style={{
+          color: 'rgba(255,255,255,0.75)',
+          fontSize: '16px',
+          fontWeight: '700',
+          marginBottom: '10px',
+          textAlign: 'left',
+        }}
+      >
+        Category: {habit.category}
+      </p>
+
+      <p
+        style={{
+          color: 'rgba(255,255,255,0.65)',
+          fontSize: '15px',
+          fontWeight: '600',
+          textAlign: 'left',
+        }}
+      >
+        Frequency: {habit.frequency}
+      </p>
+    </div>
+  ))}
+</div>
+
+<button
+onClick={modalworking}
+className='block mx-auto mt-7'
+  style={{
+    background: 'linear-gradient(160deg, #0f2a1e 0%, #0d1f1d 50%, #091518 100%)',
+    border: '1.5px solid rgba(21, 59, 56, 0.5)',
+    boxShadow: '0 0 60px rgba(21, 59, 56, 0.3), 0 0 20px rgba(14, 42, 42, 0.2)',
+    borderRadius: '24px',
+    padding: '16px 40px',
+    color: 'white',
+    fontSize: '16px',
+    fontWeight: '700',
+    letterSpacing: '0.08em',
+    textTransform: 'uppercase',
+    cursor: 'pointer',
+    transition: 'all 0.3s ease',
+  }}
+  onMouseEnter={e => {
+    e.currentTarget.style.background = 'linear-gradient(160deg, #1a4a30 0%, #153b38 50%, #0e2a2a 100%)';
+    e.currentTarget.style.border = '1.5px solid rgba(30, 100, 80, 0.9)';
+    e.currentTarget.style.boxShadow = '0 0 80px rgba(21, 120, 80, 0.5), 0 0 40px rgba(14, 80, 60, 0.4), 0 8px 32px rgba(0,0,0,0.4)';
+    e.currentTarget.style.transform = 'translateY(-8px) scale(1.02)';
+  }}
+  onMouseLeave={e => {
+    e.currentTarget.style.background = 'linear-gradient(160deg, #0f2a1e 0%, #0d1f1d 50%, #091518 100%)';
+    e.currentTarget.style.border = '1.5px solid rgba(21, 59, 56, 0.5)';
+    e.currentTarget.style.boxShadow = '0 0 60px rgba(21, 59, 56, 0.3), 0 0 20px rgba(14, 42, 42, 0.2)';
+    e.currentTarget.style.transform = 'translateY(0) scale(1)';
+  }}
+  onMouseDown={e => { e.currentTarget.style.transform = 'translateY(-2px) scale(0.98)'; }}
+  onMouseUp={e => { e.currentTarget.style.transform = 'translateY(-8px) scale(1.02)'; }}
+>
+  Click to Add Habit
+</button>
+    </div>
+
+
+    <div className={`fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur ${showmodalzust ? 'block':'hidden'}`}>
+
+    <div onClick={modalworking} className='absolute top-4 right-4 cursor-pointer'>
+      <p className='font-bold text-white text-2xl'>X</p>
+    </div>
+
+          <div className='flex justify-center items-center min-h-screen px-4 '>
 
         <div style={{
           background: 'linear-gradient(160deg, #0f2a1e 0%, #0d1f1d 50%, #091518 100%)',
@@ -791,6 +946,10 @@ const Habitsmaker = () => {
           </form>
         </div>
       </div>
+
+    </div>
+
+     
     </div>
   );
 };

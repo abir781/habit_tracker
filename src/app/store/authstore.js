@@ -32,6 +32,7 @@ export const useAuth = create((set) => ({
   restore: () => {
     const token = localStorage.getItem("token");
     const user = localStorage.getItem("user");
+    
 
     if (token && user) {
       set({ token, user: JSON.parse(user) });
