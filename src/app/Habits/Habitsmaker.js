@@ -540,6 +540,8 @@ import React, { useEffect, useState } from 'react';
 import { useHabit } from '../store';
 import { toast } from 'react-toastify';
 import { useAuth } from '../store/authstore';
+import { FaCheckCircle, FaLongArrowAltUp, FaRegCircle } from 'react-icons/fa';
+import axios from 'axios';
 
 const Habitsmaker = () => {
 
@@ -548,6 +550,8 @@ const Habitsmaker = () => {
    const [datas,setdatas] = useState([]);
 
    const [startDate, setStartDate] = useState(new Date());
+
+   const [completed, setCompleted] = useState(false);
 
 
 
@@ -598,6 +602,23 @@ const modalworking =()=>{
     { name: "Mindfulness", color: "#1abc9c", glow: "rgba(26, 188, 156, 0.6)" },
     { name: "Hobby", color: "#f1c40f", glow: "rgba(241, 196, 15, 0.6)" },
   ];
+
+  const makehabitdaily =async(id)=>{
+
+    console.log(id);
+
+       const res = await axios.patch(`http://localhost:5000/habits/${id}/complete`);
+
+  }
+
+  const gototop=()=>{
+
+      window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+
+  }
 
   const redalert = (catName, index) => {
     setcategoryzust(catName);
@@ -706,6 +727,17 @@ const modalworking =()=>{
       >
         Frequency: {habit.frequency}
       </p>
+
+       <button
+      onClick={() => makehabitdaily(habit._id)}
+      className="text-xl"
+    >
+      {completed ? (
+        <FaCheckCircle className="text-green-500" />
+      ) : (
+        <FaRegCircle className="text-gray-400" />
+      )}
+    </button>
     </div>
   ))}
 </div>
@@ -744,6 +776,14 @@ className='block mx-auto mt-7'
 >
   Click to Add Habit
 </button>
+
+<div className='flex justify-end mt-10 mr-7 cursor-pointer'>
+
+  <button className='cursor-pointer' onClick={gototop} ><FaLongArrowAltUp size={35}/></button>
+
+</div>
+
+
     </div>
 
 
@@ -950,6 +990,9 @@ className='block mx-auto mt-7'
     }}
   />
 </div>
+
+
+       
 
             <button
               type="submit"
