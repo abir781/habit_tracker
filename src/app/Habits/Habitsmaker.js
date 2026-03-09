@@ -737,6 +737,7 @@ const modalworking =()=>{
       ) : (
         <FaRegCircle className="text-gray-400" />
       )}
+      Completed today
     </button>
     </div>
   ))}
