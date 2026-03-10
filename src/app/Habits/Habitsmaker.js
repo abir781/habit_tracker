@@ -545,13 +545,15 @@ import axios from 'axios';
 
 const Habitsmaker = () => {
 
+  const today = new Date().toISOString().split("T")[0];
+
    const restoreAuth = useAuth((state) => state.restore);
 
    const [datas,setdatas] = useState([]);
 
    const [startDate, setStartDate] = useState(new Date());
 
-   const [completed, setCompleted] = useState(false);
+   const [index, setindex] = useState(null);
 
 
 
@@ -569,17 +571,71 @@ const Habitsmaker = () => {
       const userzust = useAuth((state)=>state.user);
       const useremail= userzust?.email;
 
+// useEffect(() => {
+
+//   if(!useremail) return;
+//   console.log(useremail);
+
+//   fetch(`http://localhost:5000/habitscollection?email=${useremail}`)
+//     .then(res => res.json())
+//     .then(data => {
+//       setdatas(data);
+//       datestreakfunc(data);
+//     })
+
+// }, [useremail])
+
 useEffect(() => {
-
   if(!useremail) return;
-  console.log(useremail);
-
-  fetch(`http://localhost:5000/habitscollection?email=${useremail}`)
-    .then(res => res.json())
-    .then(data => setdatas(data))
-
+   refecth(useremail);
+ 
 }, [useremail])
 
+const refecth =(useremail)=>{
+
+   fetch(`http://localhost:5000/habitscollection?email=${useremail}`)
+    .then(res => res.json())
+    .then(data => {
+      // streak attach করা
+      const dataWithStreak = data.map(habit => ({
+        ...habit,
+        streak: calculateStreak(habit.completedDates)
+      }));
+      
+
+      setdatas(dataWithStreak);
+    });
+
+}
+
+// frontend streak calculator
+const calculateStreak = (completedDates) => {
+  if (!completedDates || completedDates.length === 0) return 0;
+
+  // date string গুলোকে sort করা (newest first)
+  const sortedDates = completedDates
+    .map(d => new Date(d))
+    .sort((a, b) => b - a);
+
+  let streak = 0;
+  let today = new Date();
+  today.setHours(0,0,0,0); // ignore time
+
+  for (let i = 0; i < sortedDates.length; i++) {
+    const date = new Date(sortedDates[i]);
+    date.setHours(0,0,0,0);
+
+    const diff = Math.floor((today - date) / (1000 * 60 * 60 * 24));
+
+    if (diff === streak) {
+      streak++;
+    } else {
+      break;
+    }
+  }
+
+  return streak;
+};
 const modalworking =()=>{
   showmodalonmiddlezust();
 }
@@ -603,12 +659,15 @@ const modalworking =()=>{
     { name: "Hobby", color: "#f1c40f", glow: "rgba(241, 196, 15, 0.6)" },
   ];
 
-  const makehabitdaily =async(id)=>{
+  const makehabitdaily =async(id,index)=>{
 
-    console.log(id);
+    // console.log(id);
 
        const res = await axios.patch(`http://localhost:5000/habits/${id}/complete`);
-
+       console.log(index);
+       setIsActive(index);
+       refecth(useremail);
+       
   }
 
   const gototop=()=>{
@@ -664,8 +723,10 @@ const modalworking =()=>{
 
        <div className="   px-4 py-8   min-h-screen">
      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-[1800px] mx-auto mt-[140px]">
-  {datas.map((habit) => (
-    <div
+  {datas.map((habit,index) => {
+    const isCompletedToday = habit.completedDates?.includes(today);
+    return(
+       <div
       key={habit._id}
       style={{
         background: 'linear-gradient(160deg, #0f2a1e 0%, #0d1f1d 50%, #091518 100%)',
@@ -717,7 +778,7 @@ const modalworking =()=>{
         Category: {habit.category}
       </p>
 
-      <p
+      {/* <p
         style={{
           color: 'rgba(255,255,255,0.65)',
           fontSize: '15px',
@@ -726,21 +787,33 @@ const modalworking =()=>{
         }}
       >
         Frequency: {habit.frequency}
-      </p>
+      </p> */}
 
        <button
-      onClick={() => makehabitdaily(habit._id)}
+      onClick={() => makehabitdaily(habit._id,index)}
       className="text-xl"
     >
-      {completed ? (
-        <FaCheckCircle className="text-green-500" />
+      {isCompletedToday ? (
+        <FaCheckCircle className="text-green-500 inline" />
       ) : (
-        <FaRegCircle className="text-gray-400" />
+        <FaRegCircle className="text-gray-400 inline" />
       )}
-      Completed today
+      
+      <span className='ml-2'>Completed today</span>
+      
+     
     </button>
+
+     <p> Current Streak: {habit.streak} days</p>
+
+    <div>
+      <p>{habit.completedDates.length}</p>
+      </div>
     </div>
-  ))}
+
+    )
+   
+})}
 </div>
 
 <button
@@ -854,6 +927,8 @@ className='block mx-auto mt-7'
             <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: '11px', fontWeight: '600', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '-8px' }}>
               Category
             </p>
+
+           
 
             <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', justifyContent: 'center' }}>
               {categories.map((cat, index) => (
