@@ -52,7 +52,7 @@ const Navbarglobal = () => {
         <ul className='flex gap-14 justify-center items-center'>
           <Link href="/">Home</Link>
           <Link href="/Habits">Habits</Link>
-          <Link href="/progress">Progress</Link>
+          <Link href="/reminder">Reminder</Link>
           <Link href="/profile">Profile</Link>
           <Link href="/signup">Signup</Link>
 

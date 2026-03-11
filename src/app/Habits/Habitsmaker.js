@@ -664,8 +664,8 @@ const modalworking =()=>{
     // console.log(id);
 
        const res = await axios.patch(`http://localhost:5000/habits/${id}/complete`);
-       console.log(index);
-       setIsActive(index);
+       
+       
        refecth(useremail);
        
   }
@@ -859,6 +859,8 @@ className='block mx-auto mt-7'
 
 
     </div>
+
+   {/* <div>modal</div> */}
 
 
     <div className={`fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur ${showmodalzust ? 'block':'hidden'}`}>
