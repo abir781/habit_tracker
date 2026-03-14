@@ -41,7 +41,7 @@ const Remidnermaker = () => {
         const timeString = `${hours}:${minutes}`
         settimenow(timeString);
 
-        if(hours > 8 && hours < 12){
+        if(hours > 8 && hours < 14){
             setShowNotification(true);
             // 10 seconds later hide
             setTimeout(() => setShowNotification(false), 10000);

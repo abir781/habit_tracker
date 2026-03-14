@@ -2,8 +2,10 @@
 import React from 'react';
 import { useHabit } from '../store';
 import { useAuth } from '../store/authstore';
+import { useRouter } from 'next/navigation';
 
 const Signup = () => {
+    const router = useRouter()
      const lightzust = useHabit((state)=> state.light)
 
      const setloginzust = useAuth((state)=> state.setlogin);
@@ -47,7 +49,9 @@ const Signup = () => {
       // Token save
       // localStorage.setItem("token", data.token)
       setloginzust(data.user,data.token);
-      alert("Login Success ✅")
+
+      router.push('/Habits')
+      
       e.target.reset()
     //   router.push("/dashboard") // Protected route
     } else {
