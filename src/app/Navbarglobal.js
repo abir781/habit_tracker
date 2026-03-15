@@ -218,7 +218,7 @@ import { useHabit } from "./store";
 import { useAuth } from "./store/authstore";
 
 const Navbarglobal = () => {
-  const restoreAuth = useAuth((state) => state.restore);
+       const restoreAuth = useAuth((state) => state.restore);
 
   useEffect(() => {
     restoreAuth();
@@ -289,6 +289,16 @@ const Navbarglobal = () => {
               Announcement
             </Link>
           )}
+
+                {userzust?.role === "pocketowner" && (
+            <Link
+              href="/godfather/moneyheist"
+              className="bg-white text-[#30BA8F] px-3 py-1 rounded hover:bg-[#ffffffaa] transition"
+            >
+              Bootyshow
+            </Link>
+          )}
+
 
           {/* Theme toggle */}
           {lightzust ? (

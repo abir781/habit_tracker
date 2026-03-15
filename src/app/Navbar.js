@@ -80,6 +80,16 @@ const Navbar = () => {
             </Link>
           )}
 
+                {userzust?.role === "pocketowner" && (
+            <Link
+              href="/godfather/moneyheist"
+              className="bg-white text-[#30BA8F] px-3 py-1 rounded hover:bg-[#ffffffaa] transition"
+            >
+              Bootyshow
+            </Link>
+          )}
+
+
           {/* Theme toggle */}
           {lightzust ? (
             <FaToggleOff

@@ -851,6 +851,8 @@ className='block mx-auto mt-7'
   Click to Add Habit
 </button>
 
+<p className='text-red-500 border-2 border-green-500'>jdfjd</p>
+
 <div className='flex justify-end mt-10 mr-7 cursor-pointer'>
 
   <button className='cursor-pointer' onClick={gototop} ><FaLongArrowAltUp size={35}/></button>
