@@ -547,6 +547,8 @@ const Habitsmaker = () => {
 
   const today = new Date().toISOString().split("T")[0];
 
+  const [trues,settrues] = useState(false);
+
    const restoreAuth = useAuth((state) => state.restore);
 
    const [datas,setdatas] = useState([]);
@@ -554,6 +556,8 @@ const Habitsmaker = () => {
    const [startDate, setStartDate] = useState(new Date());
 
    const [index, setindex] = useState(null);
+
+   const setpointzust = useHabit((state)=>state.setpoint);
 
 
 
@@ -570,6 +574,7 @@ const Habitsmaker = () => {
   const [isActive, setIsActive] = useState(null);
       const userzust = useAuth((state)=>state.user);
       const useremail= userzust?.email;
+      const pointzust = useHabit((state)=>state.point);
 
 // useEffect(() => {
 
@@ -661,7 +666,13 @@ const modalworking =()=>{
 
   const makehabitdaily =async(id,index)=>{
 
+    settrues(true);
+
+    
+
     // console.log(id);
+
+       setpointzust();
 
        const res = await axios.patch(`http://localhost:5000/habits/${id}/complete`);
        
@@ -722,6 +733,14 @@ const modalworking =()=>{
     <div className={`min-h-screen rounded ${lightzust ? "bg-gradient-to-br from-[#f8fbff] via-[#eef6ff] to-[#e0f2fe] text-black" : "bg-gradient-to-br from-[#0b1419] via-[#13232d] to-[#1b3745] text-white"}`}>
 
        <div className="   px-4 py-8   min-h-screen">
+
+         <div className='flex justify-center'>
+
+                  <p className='text-white '>{pointzust}</p>
+
+                </div>
+
+        
      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-[1800px] mx-auto mt-[140px]">
   {datas.map((habit,index) => {
     const isCompletedToday = habit.completedDates?.includes(today);
@@ -791,6 +810,7 @@ const modalworking =()=>{
 
        <button
       onClick={() => makehabitdaily(habit._id,index)}
+      disabled={trues}
       className="text-xl"
     >
       {isCompletedToday ? (
@@ -851,7 +871,7 @@ className='block mx-auto mt-7'
   Click to Add Habit
 </button>
 
-<p className='text-red-500 border-2 border-green-500'>jdfjd</p>
+
 
 <div className='flex justify-end mt-10 mr-7 cursor-pointer'>
 

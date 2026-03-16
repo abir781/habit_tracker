@@ -5,6 +5,7 @@ import BlurIn from './Blurin';
 import FadeInButton from './Fadeinbutton';
 import { Archivo_Black } from 'next/font/google';
 import { useAuth } from './store/authstore';
+import { useHabit } from './store';
 
 
 //   const bungee = Bungee({
@@ -26,6 +27,8 @@ const Banner = () => {
 
     const tokenzust = useAuth((state)=>state.token);
 
+    const pointzust = useHabit((state)=>state.point);
+
     console.log(userzust,tokenzust);
 
 
@@ -37,6 +40,14 @@ const Banner = () => {
            
 
                 <Navbar></Navbar>
+
+                <div className='flex justify-center'>
+
+                  <p className='text-white '>{pointzust}</p>
+
+                </div>
+
+                
 
 
               

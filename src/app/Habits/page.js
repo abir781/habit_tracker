@@ -4,11 +4,14 @@ import Navbar from '../Navbar';
 import Navbarglobal from '../Navbarglobal';
 import PrivateRoute from '../PrivateRoute';
 
+
 const Habitpage = () => {
+   
     return (
         <div>
 
             <Navbarglobal></Navbarglobal>
+
 
             <PrivateRoute>
 
