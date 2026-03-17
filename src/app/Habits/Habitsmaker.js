@@ -547,17 +547,21 @@ const Habitsmaker = () => {
 
   const today = new Date().toISOString().split("T")[0];
 
-  const [trues,settrues] = useState(false);
+  // const [trues,settrues] = useState(false);
 
    const restoreAuth = useAuth((state) => state.restore);
 
    const [datas,setdatas] = useState([]);
+
+   const [userdata, setuserdata] = useState([]);
 
    const [startDate, setStartDate] = useState(new Date());
 
    const [index, setindex] = useState(null);
 
    const setpointzust = useHabit((state)=>state.setpoint);
+
+   const pointzust = useHabit((state)=>state.point);
 
 
 
@@ -573,8 +577,10 @@ const Habitsmaker = () => {
   const setcategoryzust = useHabit((state) => state.setCategory);
   const [isActive, setIsActive] = useState(null);
       const userzust = useAuth((state)=>state.user);
+      console.log(userzust);
       const useremail= userzust?.email;
-      const pointzust = useHabit((state)=>state.point);
+      
+     
 
 // useEffect(() => {
 
@@ -609,6 +615,29 @@ const refecth =(useremail)=>{
       
 
       setdatas(dataWithStreak);
+    });
+
+}
+
+console.log(userdata);
+
+const refecth2 =(useremail)=>{
+
+   fetch(`http://localhost:5000/usercollection?email=${useremail}`)
+    .then(res => res.json())
+    .then(data => {
+      // streak attach করা
+      console.log();
+       setpointzust(data[0].score);
+
+
+      // const dataWithStreak = data.map(habit => ({
+      //   ...habit,
+      //   streak: calculateStreak(habit.completedDates)
+      // }));
+      
+
+      // setuserdata(dataWithStreak);
     });
 
 }
@@ -666,18 +695,21 @@ const modalworking =()=>{
 
   const makehabitdaily =async(id,index)=>{
 
-    settrues(true);
+    
 
     
 
     // console.log(id);
 
-       setpointzust();
+      
 
        const res = await axios.patch(`http://localhost:5000/habits/${id}/complete`);
+
+       const res2 = await axios.patch(`http://localhost:5000/users/${userzust?.id}/complete`)
        
        
        refecth(useremail);
+       refecth2(useremail);
        
   }
 
@@ -717,6 +749,7 @@ const modalworking =()=>{
         toast.success(data.message || "Habit saved successfully!");
         e.target.reset();
         setIsActive(null);
+        refecth(useremail);
       } else {
         toast.error(data.message || "Something went wrong!");
       }
@@ -810,7 +843,7 @@ const modalworking =()=>{
 
        <button
       onClick={() => makehabitdaily(habit._id,index)}
-      disabled={trues}
+      disabled={isCompletedToday ? true : false}
       className="text-xl"
     >
       {isCompletedToday ? (

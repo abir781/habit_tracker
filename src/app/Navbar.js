@@ -21,13 +21,17 @@ const Navbar = () => {
   const loadingzust = useAuth((state) => state.loading);
   const errorzust = useAuth((state) => state.error);
   const setlogoutzust = useAuth((state) => state.setlogout);
+  const setpointzust = useHabit((state)=>state.setpoint);
 
   const makeinverse = () => {
     darkandlightmakerzust();
   };
 
   const handlelogout = () => {
+
     setlogoutzust();
+    setlogoutzust(0);
+    
   };
 
   return (

@@ -231,12 +231,14 @@ const Navbarglobal = () => {
   const loadingzust = useAuth((state) => state.loading);
   const errorzust = useAuth((state) => state.error);
   const setlogoutzust = useAuth((state) => state.setlogout);
+  const setpointzust = useHabit((state)=>state.setpoint);
 
   const makeinverse = () => {
     darkandlightmakerzust();
   };
 
   const handlelogout = () => {
+    setpointzust(0);
     setlogoutzust();
   };
 
