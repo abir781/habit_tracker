@@ -40,10 +40,9 @@ const Banner = () => {
            
 
                 <Navbar></Navbar>
+  <div className='absolute top-15 right-10'>
 
-                <div className='flex justify-center'>
-
-                  <p className='text-white '>{pointzust}</p>
+                  <p className='text-white text-2xl font-bold'>Score: {pointzust}</p>
 
                 </div>
 

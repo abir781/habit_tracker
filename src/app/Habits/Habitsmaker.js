@@ -767,9 +767,9 @@ const modalworking =()=>{
 
        <div className="   px-4 py-8   min-h-screen">
 
-         <div className='flex justify-center'>
+         <div className='absolute top-15 right-10'>
 
-                  <p className='text-white '>{pointzust}</p>
+                  <p className='text-white text-2xl font-bold'>{pointzust}</p>
 
                 </div>
 

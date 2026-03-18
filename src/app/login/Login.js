@@ -2,6 +2,8 @@
 import React from 'react';
 import { useHabit } from '../store';
 import { useAuth } from '../store/authstore';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 const Login = () => {
      const lightzust = useHabit((state)=> state.light)
@@ -16,6 +18,12 @@ const Login = () => {
     const setloginzust = useAuth((state)=> state.setlogin);
 
     const setlogoutzust = useAuth((state)=> state.setlogout);
+
+     const setpointzust = useHabit((state)=>state.setpoint);
+    
+       const pointzust = useHabit((state)=>state.point);
+
+       const router = useRouter();
 
 
 
@@ -47,6 +55,18 @@ const Login = () => {
     if (res.ok) {
       // Token save
       // localStorage.setItem("token", data.token)
+      axios.get(`http://localhost:5000/usercollection?email=${email}`)
+  .then(response => {
+    // ডাটা সফলভাবে আসলে এখানে দেখাবে
+    setpointzust(response.data[0].score);
+    router.push('/');
+    
+    
+  })
+  .catch(error => {
+    // এরর হলে এখানে দেখাবে
+    console.error('Error fetching data:', error);
+  });
       setloginzust(data.user,data.token);
       alert("Login Success ✅")
       e.target.reset()
@@ -61,6 +81,12 @@ const Login = () => {
       <div className={`min-h-screen rounded ${lightzust ? "bg-gradient-to-br from-[#f8fbff] via-[#eef6ff] to-[#e0f2fe] text-black" : "bg-gradient-to-br from-[#0b1419] via-[#13232d] to-[#1b3745] text-white"}`}>
 
   <div className='flex justify-center items-center min-h-screen px-4'>
+
+      <div className='absolute top-15 right-10'>
+
+                  <p className='text-white text-2xl font-bold'>Score: {pointzust}</p>
+
+                </div>
 
     {/* Card Container */}
     <div style={{
